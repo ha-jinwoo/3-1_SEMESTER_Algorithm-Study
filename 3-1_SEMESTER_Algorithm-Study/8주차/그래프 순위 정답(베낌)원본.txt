@@ -1,0 +1,69 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+class sunsu{
+public : 
+	int num;//내번호
+	vector<int>winner;//나를 이긴 선수
+	vector<int>loser;//나에게 진 선수
+public:
+	void win(int num){
+		if ( find(winner.begin(), winner.end(), num) == winner.end() )
+			winner.push_back(num);
+	}
+	void lose(int num){
+		if(find(loser.begin(),loser.end(),num)==loser.end())
+			loser.push_back(num);
+	}
+};
+int solution(int n, vector<vector<int>> results) {
+	int answer = 0;
+	if(n==1)return 1;
+	vector<sunsu>sunsus(n+1);
+	for(int i=0;i<sunsus.size();i++){
+		sunsus[i].num=i;
+	}
+	for(int i=0;i<results.size();i++){
+		sunsus[results[i][0]].lose(results[i][1]);
+		sunsus[results[i][1]].win(results[i][0]);
+		for(int j=0;j<sunsus[results[i][1]].loser.size();j++){
+			sunsus[results[i][0]].lose(sunsus[results[i][1]].loser[j]);
+			sunsus[sunsus[results[i][1]].loser[j]].win(results[i][0]);
+		}
+		for(int j=0;j<sunsus[results[i][0]].winner.size();j++){
+			sunsus[results[i][1]].win(sunsus[results[i][0]].winner[j]);
+			sunsus[sunsus[results[i][0]].winner[j]].lose(results[i][1]);
+		}
+		/*
+		        1. [A,B] 는 A 가 B 를 이겼다는 것이고,
+		        2. [C,A] 는 C 가 A 를 이겼다는 것이고,
+		        3. [B,D] 는 B 가 D 를 이겼다는 것이다.
+		        1 에서 A 의 loser 에는 B 가, B 의 winner 에는 A 가 들어간다.
+		        sunsu[A].lose(B); , sunsu[B].win(A);
+
+		        2 에서 C 의 loser 에는 A 가, A 의 winner 에는 C 가 들어간다.
+		        sunsu[C].lose(A); , sunsu[A].win(C);
+		        2-1 C 가 A 를 이겼으므로 C 는 B 도 이긴게 되고,
+		        A 의 loser 목록에 있는 사람들을 C 에 넣어주고, A 의 loser 목록 사람들에게 C 를 winner 로 넣어준다.
+
+		        3 에서 B 의 loser 에는 D 가, D 의 winner 에는 B 가 들어간다.
+		        sunsu[B].lose(D); , sunsu[D].win(B);
+		        3-1 B 가 D 를 이겼으므로 D 는 A,C 에게도 진게 되고,
+		        B 의 winner 목록에 있는 사람들을 D 에 넣어주고, B 의 winner 목록 사람들에게 D 를 loser 로 넣어준다.        
+
+		        */
+	}
+	for(int i=1;i<sunsus.size();i++){
+		for(int j=0;j<sunsus[i].loser.size();j++){
+			for(int k=0;k<sunsus[i].winner.size();k++){
+				sunsus[sunsus[i].winner[k]].lose(sunsus[i].loser[j]);
+				sunsus[sunsus[i].loser[j]].win(sunsus[i].winner[k]);
+			}
+		}
+	}
+	for(int i=1;i<sunsus.size();i++){
+	if(sunsus[i].winner.size()+sunsus[i].loser.size()==n-1)answer++;
+	}
+	return answer;
+}

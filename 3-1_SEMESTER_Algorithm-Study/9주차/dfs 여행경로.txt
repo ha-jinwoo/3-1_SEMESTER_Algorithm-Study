@@ -1,0 +1,37 @@
+#include <string>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+void findTripRoute(const int depth, const int length, const string airport,
+		vector<bool> & visited, vector<string> & answer, vector<string> bucket, 
+		vector<vector<string>> & tickets) {
+	bucket.push_back(airport);
+	
+	if (depth == length) { answer = vector<string>(bucket.begin(), bucket.end()); return; }
+	
+	for (int i = 0; i < length; i++) {
+
+		const auto point = make_pair(tickets[i].front(), tickets[i].back());
+
+		if (point.first == airport && visited[i] == false) {
+			visited[i] = true;
+			findTripRoute(depth + 1, length, point.second, visited, answer, bucket, tickets);
+
+			if (length == answer.size() - 1) { return; }
+			visited[i] = false;
+		}
+	}
+}
+
+vector<string> solution(vector<vector<string>> tickets) {
+
+	vector<string> answer;
+	vector<bool> visited = vector<bool>(tickets.size());
+
+	sort(tickets.begin(), tickets.end());
+	findTripRoute(0, tickets.size(), "ICN", visited, answer, vector<string>(), tickets);
+
+	return answer;
+}

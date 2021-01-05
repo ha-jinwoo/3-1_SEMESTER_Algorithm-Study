@@ -1,0 +1,107 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+using namespace std;
+
+int solution(string name) {
+	int answer = 0,i=0;
+
+	while(i!=name.size()){
+		char a[1];
+		a[0]=name[i];
+		int b=a[0];
+		if(b>77){
+			b=91-b;
+		}
+		else b=b-65;
+		answer+=b;
+		i++;
+	}
+	i=0;
+	int j=0;
+	int max=0,max2;
+	int start=0,end,start2,end2,start3,end3,start4,end4;
+	int flag=0;
+
+	while(i!=name.size()-2){
+		if(name[i]=='A'&&name[i+1]=='A'){
+			if(flag==0){
+				start=i;
+				j++;
+				flag=1;
+			}
+			j++;
+			end=i+1;
+		}
+		else{
+			if(j>max){max=j;
+			flag=0;
+			start2=start;
+			end2=end;
+			}
+		}
+		i++;
+	}
+	max2=max;
+	j=0;
+	i=name.size()-2;
+	flag=0;
+	while(i!=0){
+		if(name[i]=='A'&&name[i-1]=='A'){
+			if(flag==0){
+				start=i;
+				j++;
+				flag=1;
+			}
+			j++;
+			end=i+1;
+		}
+		else{
+			if(j>max){max=j;
+			flag=0;
+			start3=start;
+			end3=end;
+			}
+		}
+		i--;
+	}
+	if(max>max2){max2=max;
+	start4=start3;
+	end4=end3;
+	}
+	else{
+		start4=start2;
+		end4=end2;
+	}
+
+
+
+	i=name.size()-1;
+	int e=1;
+	while(name[i]=='A'&&i>0){
+		e++;
+		i--;
+	}
+	i=1;
+	int f=1;
+	while(name[i]=='A'&&i<name.size()){
+		f++;
+		i++;
+	}
+	cout<<start4<<end4;
+	int k;
+	if(e>f)k=name.size()-e;
+	else k=name.size()-f;
+	int y;
+	int h=name.size()-end4;
+	if(start4>h){
+		y=(2*h)+start4;
+	}
+	else{
+		y=(2*start4)+h;
+	}
+
+	if(y<k)return answer+y;
+	return answer+k;
+}

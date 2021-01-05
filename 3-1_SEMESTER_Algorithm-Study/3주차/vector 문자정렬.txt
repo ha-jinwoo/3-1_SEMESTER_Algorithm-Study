@@ -1,0 +1,14 @@
+int main(){
+int i;
+	vector<string> participant;
+	vector<string>completion;
+	participant.push_back("b");
+	participant.push_back("c");
+	participant.push_back("a");
+	completion.push_back("a");
+	completion.push_back("c");
+	sort(participant.begin(),participant.end());
+	for(i=0;i<participant.size();i++)cout<<participant[i];
+
+	return 0;
+}

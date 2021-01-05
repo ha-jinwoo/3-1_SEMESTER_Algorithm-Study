@@ -1,0 +1,65 @@
+#include <string>
+#include <vector>
+#include<iostream>
+using namespace std;
+
+int isprimenum(int a){
+	if(a==1||a==0)return 0;
+	int b,count=0;
+	for(b=2;b<=a;b++){
+		if(a%b==0)count++;
+		if(count==2)
+			return 0;
+	}
+	return 1;
+}//if 1->소수  0->소수가 아님
+
+void soinsubunhae(int a[],int b[],int &red2,int &count){
+	int i=0;
+	while(1){
+		if(red2%a[i]==0){
+			red2/=a[i];
+			b[count]=red2;
+			count++;
+			break;
+		}
+		i++;
+	}
+}
+
+vector<int> solution(int brown, int red) {
+
+	vector<int> answer;
+
+	int red2=red,i;
+	int b[5000]={0};
+	int a[669]={0},count=0;//소수저장 배열
+	for(int i=0;i<5000;i++){
+		if(isprimenum(i)){
+			a[count]=i;
+			count++;
+		}
+	}
+	b[0]=red2;
+	count=1;
+	while(red2!=1) soinsubunhae(a,b,red2,count);
+	int garo,sero;
+	i=0;
+while(1){
+	garo=b[i];
+	sero=red/garo;
+	if(2*(garo+sero)+4==brown){
+		answer.push_back(garo+2);
+		answer.push_back(sero+2);
+	break;
+	}
+	i++;
+}
+	return answer;
+}
+
+int main(){
+	vector<int> answer=solution(8,1);
+	cout<<answer[0]<<" "<<answer[1];
+	return 0;
+}

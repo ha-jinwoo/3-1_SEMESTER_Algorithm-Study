@@ -1,0 +1,76 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+
+void min(vector<int> &rocks){
+	int minnum,i=0;
+	int n=rocks.size();
+	while(rocks[i]==0){
+		i++;
+	}
+	minnum=i;
+
+	while(i!=n)
+	{
+		if(rocks[minnum]-rocks[minnum-1]>rocks[i]-rocks[i-1])minnum=i;
+		i++;
+	}
+
+	if(rocks[minnum+1]-rocks[minnum]!=0){
+
+		int a1,a2;
+		if(minnum-2>=0){
+			a1=rocks[minnum-1]-rocks[minnum-2];
+			a2=rocks[minnum+1]-rocks[minnum];
+			if(a1<a2&&rocks[minnum-1]!=0)rocks[minnum-1]=0;
+			else rocks[minnum]=0;
+		}
+		else rocks[minnum]=0;
+	}
+
+	sort(rocks.begin(),rocks.end());
+}
+
+int solution(int distance, vector<int> rocks, int n) {
+	int answer = 0,i=0;
+	sort(rocks.begin(),rocks.end());
+	rocks.insert(rocks.begin(),0);
+	rocks.push_back(distance);
+
+	while(i!=n){
+		min(rocks);
+		i++;
+	}
+
+	i=0;
+	int minnumnum;
+	int rn=rocks.size();
+	while(rocks[i]==0){
+		i++;
+	}
+	minnumnum=i;
+
+	while(i!=rn)
+	{
+		if(rocks[minnumnum]-rocks[minnumnum-1]>rocks[i]-rocks[i-1])minnumnum=i;
+		i++;
+	}
+
+	answer=rocks[minnumnum]-rocks[minnumnum-1];
+
+	return answer;
+}
+int main(void){
+
+	vector<int> rocks;
+	rocks.push_back(2);
+	rocks.push_back(14);
+	rocks.push_back(11);
+	rocks.push_back(21);
+	rocks.push_back(17);
+	cout<<solution(25,rocks,2);
+	return 0;
+}

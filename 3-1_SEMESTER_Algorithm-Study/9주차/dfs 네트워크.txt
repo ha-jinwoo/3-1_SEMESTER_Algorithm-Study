@@ -1,0 +1,24 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+void dfs(int vertex,vector<bool> &visit,vector<vector<int>> computers){
+	visit[vertex]=1;
+	for(int i=0;i<computers.size();i++){
+		if(visit[i]==0&&computers[vertex][i]==1)dfs(i,visit,computers);
+	}
+}
+
+int solution(int n, vector<vector<int>> computers) {
+	int answer = 0;
+
+	vector<bool> visit(n,0);
+	for(int i=0;i<n;i++)
+		if(visit[i]==0){
+			dfs(i,visit,computers);
+			answer++;
+		}
+
+	return answer;
+}

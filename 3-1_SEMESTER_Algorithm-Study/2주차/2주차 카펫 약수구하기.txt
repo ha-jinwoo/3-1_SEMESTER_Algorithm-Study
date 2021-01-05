@@ -1,0 +1,18 @@
+약수구하기
+https://blog.naver.com/soohan530/221029295310 
+
+#include <string>
+#include <vector>
+#include<iostream>
+using namespace std;
+
+int main(){
+	int i,n=300;
+	for(i=1;i*i<n;i++){
+		if(n%i==0){
+			cout<<i<<" "<<n/i<<endl;
+		}
+	}
+	if(i*i==n)          //제곱수 확인
+		cout<<i;
+}

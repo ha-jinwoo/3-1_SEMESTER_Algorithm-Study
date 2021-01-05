@@ -1,0 +1,24 @@
+#include <vector>
+#include <iostream>
+using namespace std;
+
+int answer = 0;
+
+void dfs(int result,int num,vector<int> numbers, int target,int index){
+	result+=num; 
+	index++; 
+	
+	if( index == numbers.size() ){ 
+		if(result == target ) answer++;
+		return; 
+	}
+	dfs(result,numbers[index],numbers,target,index);
+	dfs(result,numbers[index]*(-1),numbers,target,index);
+}
+
+int solution(vector<int> numbers, int target) {
+    
+    dfs(0,0,numbers,target,-1);
+    
+    return answer;
+}

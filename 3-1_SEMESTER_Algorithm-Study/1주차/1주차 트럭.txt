@@ -1,0 +1,50 @@
+#include<stdio.h>
+#include<string.h>
+#include <iostream>
+#include <cmath>
+#include<algorithm>
+#include <queue>
+
+using namespace std;
+
+int solution(int length, int weight, vector<int> truckweight) {
+	int n=length;
+	int *b=new int[n];
+
+	int totalweight=0;
+	int answer = 0,i=0,k;//i=truckweight의 index
+	for(k=0;k<length;k++)b[k]=0;
+
+	do{
+		if(b[n-1]!=0)totalweight-=b[n-1];
+		for(k=n-2;k>0;k--) b[k+1]=b[k];
+		b[1]=b[0];
+
+		if(i<truckweight.size()){//b[0]=다리 진입 트럭
+			if(totalweight+truckweight[i]<=weight){
+
+				b[0]=truckweight[i];
+				totalweight+=b[0];
+				i++;
+			}
+			else b[0]=0;
+		}
+		else b[0]=0;
+		answer++;
+	}
+	while(totalweight!=0);
+	
+	return answer;
+}
+
+int main()
+{
+
+	vector<int> truckweight;
+	truckweight.push_back(7);
+	truckweight.push_back(4);
+	truckweight.push_back(5);
+	truckweight.push_back(6);
+	cout<<solution(2,10,truckweight);
+	return 0;
+}

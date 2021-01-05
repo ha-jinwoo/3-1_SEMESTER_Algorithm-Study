@@ -1,0 +1,54 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+int equal_lower(vector<int> people,vector<int> visit,int target,int start,int end){
+
+	while(end!=start){
+		if(visit[end]==0)	return end;
+		end--;
+	}
+
+	return -1;
+}
+int solution(vector<int> people, int limit) {
+	int answer = 0;
+	int end,i=0,target,index;
+	sort(people.begin(),people.end());
+	vector<int> visit(people.size(),0);
+	while(i!=people.size()){
+		if(visit[i]==1){
+			i++;
+			continue;
+		}
+		else {//Â¦Ã£±â
+			target=limit-people[i];
+			vector<int>::iterator up;
+			up= std::upper_bound (people.begin(), people.end(), target); 
+			end=up-people.begin()-1;
+			if(end<=0){
+				answer++;
+				visit[i]=1;
+				i++;
+				continue;
+			}
+			else 	index=equal_lower(people,visit,target,i,end);
+			if(index==-1){ 
+				answer++;
+				visit[i]=1;
+				i++;
+			}
+			else{
+				answer++;
+				visit[i]=1;
+				visit[index]=1;
+				i++;
+			}
+		}
+	}
+	return answer;
+}
+int main () {
+
+	return 0;
+}

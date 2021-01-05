@@ -1,0 +1,24 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+vector<int> solution(vector<int> array, vector<vector<int>> commands) {
+	vector<int> answer;
+	vector<int> b;
+	int i=0;
+	for(int j=0;j<array.size();j++){
+		b.push_back(array[j]);
+	}
+	while(i!=commands.size()){
+		sort(array.begin()+commands[i][0]-1,array.begin()+commands[i][1]);
+        
+		answer.push_back(array[commands[i][0]+commands[i][2]-2]);
+		i++;
+		for(int j=0;j<array.size();j++){
+			array[j]=b[j];
+		}
+	}
+	return answer;
+}

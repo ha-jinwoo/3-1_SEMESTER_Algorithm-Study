@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<iostream>
+#include <string>
+#include <vector>
+#include<map>
+#include <cmath>
+using namespace std;
+#include <string>
+#include <vector>
+
+using namespace std;
+
+bool solution(vector<string> phone_book) {
+    bool answer = true;
+    int i,j,k=0;
+    string s;
+    int n=phone_book.size();
+    for(i=0;i<n-1;i++){
+    	j=0;
+    	k=0;
+    	s=phone_book[i];
+    	while(k!=n){
+    	if(k==i)k++;
+    	if(j==s.size())return false;
+    	if(s[j]==phone_book[k][j])j++;
+    	else {
+    		j=0;
+    		k++;
+    	}
+    	}
+    }
+    return true;	
+    	
+    
+}
+int main(void){
+
+	int i;
+	vector<int> a;
+	a.push_back(1);
+	a.push_back(2);
+	a.push_back(3);
+	a.push_back(4);
+	a.push_back(5);
+	int n=a.size();
+	int answer=0;
+	
+	return 0;
+}

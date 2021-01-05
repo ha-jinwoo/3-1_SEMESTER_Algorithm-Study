@@ -1,0 +1,36 @@
+#include <string>
+#include <vector>
+#include<iostream>
+using namespace std;
+
+
+vector<int> solution(int brown, int red) {
+
+	vector<int> answer;
+
+	int i=2000000;
+	int garo,sero;
+	while(1){
+		i--;
+
+		while(1){
+			if(red%i==0){garo=i;
+			break;}
+			i--;
+		}
+		sero=red/garo;
+		if(2*(garo+sero)+4==brown){
+			answer.push_back(garo+2);
+			answer.push_back(sero+2);
+			break;
+		}
+
+	}
+	return answer;
+}
+
+int main(){
+	vector<int> answer=solution(24,24);
+	cout<<answer[0]<<" "<<answer[1];
+	return 0;
+}

@@ -1,0 +1,89 @@
+순열 알고리즘
+http://hochulshin.com/permutation-composition-summary/
+
+#include <string>
+#include <vector>
+#include<iostream>
+using namespace std;
+int arr[10000];
+int arrnum=0;
+int isprimenum(int a){
+	if(a==1||a==0)return 0;
+	int b,count=0;
+	for(b=2;b<=a;b++){
+		if(a%b==0)count++;
+		if(count==2)
+			return 0;
+	}
+	return 1;
+}//if 1->소수  0->소수가 아님
+
+
+void swap(int *i, int *j){
+    int temp = *i;
+    *i = *j;
+    *j = temp;
+}
+/*T[]에서 q개 출력*/
+void process(int q,int T[],int &answer){
+string str[7];
+string str2;
+int b,c=0;
+for(int i = q-1; i>= 0; i--){
+    	str[i]=to_string(T[i]);
+    }
+for(int i = q-1; i>= 0; i--)
+   str2+=str[i];
+b=stoi(str2);
+    if(isprimenum(b)){
+    	arr[arrnum]=b;
+    	for(int i=0;i<arrnum;i++)
+    		if(b==arr[i])c=1;
+    		arrnum++;
+    	if(c==0)answer++;
+    }
+
+}
+ /*data[]에서 앞에서부터 n개의 숫자 중 r개를 선택해서 순열을 출력하는 함수. q는 출력 시 출력 갯수 지정*/
+void Perm(int n, int r, int q,int data[],int T[],int &answer){
+    if(r == 0){
+        process(q,T,answer);
+        return;
+    }
+    for(int i = n-1; i>=0; i--){
+        swap(&data[i], &data[n-1]); //n-1을 모든 index와 swap해서 다양한 순서를 만든다.
+        T[r-1] = data[n-1];		  //T의 뒤에서부터 결과값 저장
+        Perm(n-1, r-1, q,data,T,answer);		  //다음  index로 진행
+        swap(&data[i], &data[n-1]);
+    }
+}
+
+int solution(string numbers) {
+	int answer = 0;
+	int i,b;
+	string str[7];
+	string str2;
+	for(int i=0;i<numbers.size();i++)
+		str[i]=numbers[i];
+
+	int T[7]; //nPr을 이루는 각각의 경우를 저장
+	int data[7];
+
+	for(i=0;i<numbers.size();i++){
+		str2=str[i];
+		data[i]=stoi(str2);
+	}
+	for(int i=1;i<=numbers.size();i++)
+	 Perm(numbers.size(), i, i,data,T,answer);
+
+	//if(isprimenum(b))answer++;
+
+	return answer;
+}
+
+int main(void){
+	string a="011";
+    int b=solution(a);
+    cout<<b;
+    return 0;
+}

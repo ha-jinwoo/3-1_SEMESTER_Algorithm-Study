@@ -1,0 +1,56 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <math.h>
+using namespace std;
+string solution(string number, int k) {
+	k=number.size()-k;
+	string answer = "";
+	string str[number.size()];
+	int i=0;
+	while(i!=number.size()){
+		str[i]=number[i];
+		i++;
+	}
+	vector <int> a;
+	int j=0;
+	i=0;
+	while(i!=number.size()){
+		a.push_back(stoi(str[i]));
+		i++;
+	}
+	i=a.size()-k;
+	int h=0;
+	int max=0;
+	while(h!=k){
+		max=j;
+		while(j!=i+1&&j!=a.size()){
+			if(a[j]>a[max])max=j;
+			j++;
+		}
+		a[h]=a[max];
+		j=max+1;
+		if(i+1!=a.size())i++;
+		else {
+			a[h+1]=a[a.size()-1];
+			break;
+		}
+		h++;
+	}
+
+	i=0;
+	while(i!=k){
+	str[i]=to_string(a[i]);
+	answer+=str[i];
+	i++;
+	}
+	
+
+	return answer;
+}
+
+int main(){
+	int k=1;
+}
+

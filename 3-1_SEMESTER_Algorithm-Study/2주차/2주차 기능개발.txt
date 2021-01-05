@@ -1,0 +1,57 @@
+#include <string>
+#include <vector>
+#include<iostream>
+using namespace std;
+int time(int progress,int speed){
+	int day=0;
+	while(1){
+		if(progress>=100)break;
+		progress+=speed;
+		day++;
+	}
+	return day;
+}
+
+vector<int> solution(vector<int> progresses, vector<int> speeds) {
+	vector<int> answer;
+	int first=0,last=1,count=1;
+	int n=speeds.size();
+	while(1){
+		if(first==n-1){
+			answer.push_back(1);
+			break;
+		}
+		if(first==n)break;
+
+		while(last!=n){
+			if(time(progresses[first],speeds[first])<time(progresses[last],speeds[last]))break;
+			last++;
+			count++;
+		}
+		answer.push_back(count);
+		first=last;
+		last=first+1;
+		count=1;
+	}
+
+
+	return answer;
+}
+int main(){
+
+
+	vector<int> progresses;
+	vector<int> speeds;
+	progresses.push_back(93);
+	progresses.push_back(30);
+	progresses.push_back(55);
+	progresses.push_back(55);
+	speeds.push_back(1);
+	speeds.push_back(30);
+	speeds.push_back(5);
+	speeds.push_back(10);
+	vector<int> answer=solution(progresses,speeds);
+	for(int i=0;i<=answer.size()-1;i++){
+		cout<<answer[i]<<" ";
+	}
+}

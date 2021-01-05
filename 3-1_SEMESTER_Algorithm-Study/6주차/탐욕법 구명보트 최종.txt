@@ -1,0 +1,26 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+int solution(vector<int> people, int limit) {
+    int answer = 0;
+    int end,i=0,rend;
+    vector<int>::iterator up;
+    sort(people.begin(),people.end());
+    up= upper_bound (people.begin(), people.end(), limit-people[0]);
+    end=up-people.begin()-1;
+    rend=end;
+    while(i<end){
+        if(limit-people[i]>=people[end]) i++;
+        end--;
+        answer++;
+    }
+    if(i==end)answer++;
+    i=rend+1;
+    while(i!=people.size()){
+        answer++;
+        i++;
+    }
+    return answer;
+}

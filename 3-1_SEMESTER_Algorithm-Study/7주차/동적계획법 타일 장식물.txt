@@ -1,0 +1,19 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+long long solution(int N) {
+    long long answer = 0;
+    vector <long long> a;
+    a.push_back(1);
+    a.push_back(1);
+    int i=2;
+    if(N>2){
+    	while(i!=N){
+    		a.push_back(a[i-1]+a[i-2]);
+    		i++;
+    	}
+    }                
+    return answer=2*(a[N-1]+a[N-2]);
+}

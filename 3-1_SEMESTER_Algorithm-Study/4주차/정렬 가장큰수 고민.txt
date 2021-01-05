@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+
+void swap(int *i, int *j){
+    int temp = *i;
+    *i = *j;
+    *j = temp;
+}
+/*T[]에서 q개 출력*/
+void process(int q,vector<int> &T,vector<string> &str){
+string str2;
+int i=0;
+
+for(int i = q-1; i>= 0; i--){
+    	str2+=T[i];
+    }
+str.push_back(str2);
+}
+ /*data[]에서 앞에서부터 n개의 숫자 중 r개를 선택해서 순열을 출력하는 함수. q는 출력 시 출력 갯수 지정*/
+void Perm(int n, int r, int q,vector<int> &data,vector<int> &T,vector<string> &str){
+    if(r == 0){
+        process(q,T,str);
+        return;
+    }
+    for(int i = n-1; i>=0; i--){
+        swap(&data[i], &data[n-1]); //n-1을 모든 index와 swap해서 다양한 순서를 만든다.
+        T[r-1] = data[n-1];		  //T의 뒤에서부터 결과값 저장
+        Perm(n-1, r-1, q,data,T,str);		  //다음  index로 진행
+        swap(&data[i], &data[n-1]);
+    }
+}
+
+string solution(vector<int> numbers) {
+    string answer = "";
+    vector<string> str;  
+    int i=0;
+    vector<int> T(numbers.size());
+	vector<int> data(numbers.size());
+    Perm(numbers.size(),numbers.size(),numbers.size(),data,T,str);
+    sort(str.begin(),str.end());
+    answer=str[str.size()-1];
+    return answer;
+}
+
+int main(void){
+
+	vector<int> rocks;
+	rocks.push_back(1);
+	rocks.push_back(4);
+	rocks.push_back(8);
+	rocks.push_back(12);
+	rocks.push_back(17);
+	rocks.push_back(25);
+
+	return 0;
+}

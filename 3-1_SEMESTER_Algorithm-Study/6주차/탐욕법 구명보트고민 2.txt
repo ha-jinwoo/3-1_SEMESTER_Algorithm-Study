@@ -1,0 +1,34 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+int solution(vector<int> people, int limit) {
+	int answer = 0;
+	int end,i=0,target;
+	sort(people.begin(),people.end());
+	vector<int> visit(people.size(),0);
+	while(i!=people.size()){
+		target=limit-people[i];
+		vector<int>::iterator up;
+		up= std::upper_bound (people.begin(), people.end(), target); 
+		end=up-people.begin()-1;
+		
+		if(end<=i){
+			answer++;
+			i++;
+			continue;
+		}
+
+		answer++;
+		people.erase(up-1);
+		i++;
+
+	}
+
+	return answer;
+}
+int main () {
+
+	return 0;
+}

@@ -1,0 +1,57 @@
+#include <string>
+#include <vector>
+#include <iostream>
+#include <map>
+using namespace std;
+
+string solution(vector<string> participant, vector<string> completion) {
+	string answer = "";
+	int i=0;
+	int n=participant.size();
+	std:: map<string,int> mymap;
+
+	while(i!=n-1){
+		if(mymap.count(completion[i])!=0){
+			mymap[completion[i]]++;
+		}
+
+		else{
+			mymap.insert ( std::pair<string,int>(completion[i],1) );
+		}
+		i++;
+	}
+
+	i=0;
+	while(1){
+
+		if(mymap.count(participant[i])==0){
+			answer=participant[i];
+			break;
+		}
+
+		else{
+			mymap[participant[i]]--;
+			if(mymap[participant[i]]==0)mymap.erase(participant[i]);
+		}
+		i++;
+	}
+
+
+	return answer;
+
+}
+
+int main(){
+
+	vector<string> participant;
+	vector<string>completion;
+	participant.push_back("a");
+	participant.push_back("b");
+	participant.push_back("c");
+	completion.push_back("a");
+	completion.push_back("c");
+
+	cout<<solution(participant,completion);
+
+	return 0;
+}
